@@ -1,9 +1,5 @@
-import {
-  Component,
-  Directive,
-  ElementRef,
-  Renderer
-} from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
+
 /**
  * Directive
  * XLarge is a simple directive to show how one is made
@@ -13,8 +9,7 @@ import {
 })
 export class XLargeDirective {
   constructor(
-    public element: ElementRef,
-    public renderer: Renderer
+    public element: ElementRef
   ) {
     /**
      * Simple DOM manipulation to set font size to x-large
@@ -23,6 +18,6 @@ export class XLargeDirective {
      *
      * for server/webworker support use the renderer
      */
-     renderer.setElementStyle(element.nativeElement, 'fontSize', 'x-large');
+     element.nativeElement.style.fontSize = 'x-large';
   }
 }

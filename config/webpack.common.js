@@ -61,7 +61,7 @@ module.exports = function (options) {
      * See: https://webpack.js.org/configuration/resolve/
      */
     resolve: {
-      mainFields: [ ...(supportES2015 ? ['es2015'] : []), 'browser', 'module', 'main' ],
+      mainFields: [(supportES2015 ? ['es2015'] : []), 'browser', 'module', 'main' ],
 
       /**
        * An array of extensions that should be used to resolve modules.
@@ -105,7 +105,7 @@ module.exports = function (options) {
     module: {
 
       rules: [
-        ...ngcWebpackConfig.loaders,
+          ...ngcWebpackConfig.loaders,
 
         /**
          * To string and css loader support for *.css files (from Angular components)
@@ -156,7 +156,7 @@ module.exports = function (options) {
           use: 'file-loader'
         }
 
-      ],
+      ]
 
     },
 
@@ -182,7 +182,7 @@ module.exports = function (options) {
         'AOT': METADATA.AOT,
         'process.env.ENV': JSON.stringify(METADATA.ENV),
         'process.env.NODE_ENV': JSON.stringify(METADATA.ENV),
-        'process.env.HMR': METADATA.HMR,
+        'process.env.HMR': METADATA.HMR
         // 'FIREBASE_CONFIG': JSON.stringify(APP_CONFIG.firebase),
       }),
 
@@ -307,7 +307,7 @@ module.exports = function (options) {
        *
        * https://github.com/szrenwei/inline-manifest-webpack-plugin
        */
-      new InlineManifestWebpackPlugin(),
+      new InlineManifestWebpackPlugin()
     ],
 
     /**
