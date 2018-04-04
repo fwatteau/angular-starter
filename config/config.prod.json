@@ -1,0 +1,11 @@
+{
+  "firebase": {
+    "apiKey": "AIzaSyBumAdWlYDXUZa7UgRd4tBcpfqREwas02Q",
+    "authDomain": "covoiturage-app.firebaseapp.com",
+    "databaseURL": "https://covoiturage-app.firebaseio.com",
+    "projectId": "covoiturage-app",
+    "storageBucket": "covoiturage-app.appspot.com",
+    "messagingSenderId": "655912646221"
+  },
+ // "gtmKey" : "GTM-XXXXXXX"
+}
