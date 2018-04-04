@@ -77,4 +77,3 @@ dll/
 *.css.shim.ts
 *.ngsummary.json
 *.shim.ngstyle.ts
-/config/config.prod.json

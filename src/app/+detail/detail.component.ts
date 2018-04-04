@@ -1,7 +1,6 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
+import { Parent } from '../../providers/parent/parent';
+
 /**
  * We're loading this component asynchronously
  * We are using some magic with es6-promise-loader that will wrap the module with a Promise
@@ -13,7 +12,7 @@ console.log('`Detail` component loaded asynchronously');
 @Component({
   selector: 'detail',
   template: `
-    <h1>Hello from Detail</h1>
+    <h1>Hello from Detail {{parent.name}}</h1>
     <span>
       <a [routerLink]=" ['./child-detail'] ">
         Child Detail
@@ -23,6 +22,7 @@ console.log('`Detail` component loaded asynchronously');
   `,
 })
 export class DetailComponent implements OnInit {
+  public parent: Parent;
 
   public ngOnInit() {
     console.log('hello `Detail` component');

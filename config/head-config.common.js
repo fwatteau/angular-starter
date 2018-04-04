@@ -43,7 +43,17 @@ module.exports = {
     /**
      * <link> tags for a Web App Manifest
      */
-    { rel: 'manifest', href: '/assets/manifest.json' }
+    { rel: 'manifest', href: '/assets/manifest.json' },
+
+    /**
+     * <link> tags for a Material icon
+     */
+    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
+
+      /**
+       * <link> tags for a Material icon
+       */
+      { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css' },
   ],
   meta: [
     { name: 'msapplication-TileColor', content: '#00bcd4' },

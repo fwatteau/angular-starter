@@ -1,37 +1,34 @@
-<div>
-  <h1 x-large class="sample-content">My Content Here</h1>
+<yaga-map [zoom]="12" [lat]="center.lat" [lng]="center.lng" >
+    <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
+    <yaga-feature-group *ngFor="let m of layers">
+        <yaga-marker [lat]="m.parent.geom.lat" [popupOpened]="false" [lng]="m.parent.geom.lng" [icon]="m.icon">
+            <yaga-popup [closeButton]="true">
+                <h5>
+                    <button mat-icon-button disabled aria-hidden="true">
+                        <mat-icon>person</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" (click)="openDialog(m.parent)">
+                        <mat-icon aria-label="Edit value">mode_edit</mat-icon>
+                    </button>
 
-  <hr>
-
-  <div>
-    For hot module reloading run
-    <pre>npm run start:hmr</pre>
-  </div>
-
-  <hr>
-
-  <div>
-    <h4>Local State</h4>
-
-    <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
-
-      <input
-        [value]="localState.value"
-        (input)="localState.value = $event.target.value"
-        placeholder="Submit Local State to App State"
-        autofocus>
-
-      <button>Submit Value</button>
-    </form>
-    <!--
-        <input type="text" [value]="localState.value" (input)="localState.value = $event.target.value" autofocus>
-        Rather than wiring up two-way data-binding ourselves with [value] and (input)
-        we can use Angular's [(ngModel)] syntax
-        <input type="text" name="textInput" [(ngModel)]="localState.value" autofocus>
-      -->
-
-    <pre>this.localState = {{ localState | json }}</pre>
-
-  </div>
-
-</div>
+                    {{m.parent.name}}
+                </h5>
+                <ul class="flex-container">
+                    <li>
+                        <i class="material-icons" *ngIf="m.parent.phone">phone_android</i>
+                        <a [href]="'tel:' + m.parent.phone">{{m.parent.phone}}</a>
+                    </li>
+                    <li>
+                        <i class="material-icons" *ngIf="m.parent.mail">email</i>
+                        <a [href]="'mailto:' + m.parent.mail">{{m.parent.mail}}</a>
+                    </li>
+                </ul>
+                <mat-divider></mat-divider>
+                <ul class="flex-container vertical">
+                    <li *ngIf="m.parent.capacities"><u>peut aider à</u> : {{m.parent.capacities}}</li>
+                    <li *ngIf="m.parent.needs"><u>a besoin de</u> : {{m.parent.needs}}</li>
+                </ul>
+            </yaga-popup>
+        </yaga-marker>
+    </yaga-feature-group>
+</yaga-map>

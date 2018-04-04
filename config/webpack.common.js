@@ -112,10 +112,15 @@ module.exports = function (options) {
          * Returns file content as string
          *
          */
+        { //this rule will only be used for any vendors
+            test: /\.css$/,
+            loaders: ['style-loader', 'css-loader'],
+            include: [/node_modules/]
+        },
         {
           test: /\.css$/,
           use: ['to-string-loader', 'css-loader'],
-          exclude: [helpers.root('src', 'styles')]
+          exclude: [helpers.root('src', 'styles'), '/node_modules/']
         },
 
         /**
@@ -182,8 +187,8 @@ module.exports = function (options) {
         'AOT': METADATA.AOT,
         'process.env.ENV': JSON.stringify(METADATA.ENV),
         'process.env.NODE_ENV': JSON.stringify(METADATA.ENV),
-        'process.env.HMR': METADATA.HMR
-        // 'FIREBASE_CONFIG': JSON.stringify(APP_CONFIG.firebase),
+        'process.env.HMR': METADATA.HMR,
+        'FIREBASE_CONFIG': JSON.stringify(APP_CONFIG.firebase),
       }),
 
       /**

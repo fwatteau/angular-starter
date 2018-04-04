@@ -1,8 +1,47 @@
-html, body{
-  height: 100%;
-  font-family: Arial, Helvetica, sans-serif
+html {
+  background: url(../assets/img/geo.png) center;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+}
+
+body app {
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+body app main {
+  flex: 1;
+  height: 100vh;
+}
+
+body app main home {
+  height: 100vh;
+}
+
+body app footer {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-left: 5vw;
+  padding-right: 5vw;
+  color: white;
+  width: 90vw;
 }
 
 a.active {
   background-color: gray;
+}
+
+.cdk-overlay-container {
+  width: auto !important;
+  height: auto !important;
+}
+
+.cdk-overlay-backdrop, .cdk-global-overlay-wrapper, .cdk-overlay-pane {
+  position: fixed !important;
 }

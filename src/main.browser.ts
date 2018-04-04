@@ -3,12 +3,12 @@
  */
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { environment } from 'environments/environment';
-
 /**
  * App Module
  * our top level module that holds all of our components
  */
 import { AppModule } from './app';
+import 'hammerjs';
 
 /**
  * Bootstrap our Angular app with a top level NgModule

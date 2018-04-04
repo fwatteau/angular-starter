@@ -2,7 +2,6 @@
  * Angular 2 decorators and services
  */
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AppState } from './app.service';
 
 /**
@@ -16,7 +15,7 @@ import { AppState } from './app.service';
     './app.component.css'
   ],
   template: `
-    <nav>
+    <!--nav>
       <a [routerLink]=" ['./'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         Index
@@ -41,30 +40,25 @@ import { AppState } from './app.service';
          routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         DevModule
       </a>
-    </nav>
+    </nav-->
 
     <main>
       <router-outlet></router-outlet>
     </main>
 
-    <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
-
     <footer>
-      <span>Angular Starter by <a [href]="twitter">@gdi2290</a></span>
-      <div>
-        <a [href]="url">
-          <img [src]="tipe" width="25%">
-        </a>
-      </div>
+      <span>Site conçu pour le
+          <a title="Un Collège ordinaire pour élèves extraordinaires"
+             [href]="url">
+              {{name}}
+          </a>
+      </span>
     </footer>
   `
 })
 export class AppComponent implements OnInit {
-  public name = 'Angular Starter';
-  public tipe = 'assets/img/tipe.png';
-  public twitter = 'https://twitter.com/gdi2290';
-  public url = 'https://tipe.io';
-  public showDevModule: boolean = environment.showDevModule;
+  public name = 'Collège communautaire';
+  public url = 'https://www.college-communautaire.org/';
 
   constructor(
     public appState: AppState

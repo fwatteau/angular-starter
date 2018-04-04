@@ -1,0 +1,86 @@
+<h2 mat-dialog-title>Edition de la fiche de {{data.parent.name}}</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="parentForm" novalidate="novalidate">
+        <mat-form-field>
+            <input matInput
+                   placeholder="Votre Nom"
+                   aria-label="Nom"
+                   required="required"
+                   formControlName="name"
+                   autocomplete="name"
+                   [class.invalid]="!parentForm.controls.name.valid">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput
+                   placeholder="Votre Adresse"
+                   aria-label="Adresse"
+                   required="required"
+                   autocomplete="off"
+                   [formControl]="addressCtrl"
+                   [matAutocomplete]="auto"
+                   [class.invalid]="!parentForm.controls.address.valid">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let add of addresses" [value]="add.properties.label">
+                    {{ add.properties.label }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput
+                   placeholder="Votre Enfant"
+                   aria-label="Prénom de l'enfant"
+                   required="required"
+                   formControlName="children"
+                   [class.invalid]="!parentForm.controls.children.valid">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput
+                   placeholder="Sa classe"
+                   aria-label="Classe"
+                   required="required"
+                   formControlName="classroom"
+                   [class.invalid]="!parentForm.controls.classroom.valid">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput
+                   placeholder="Votre adresse email"
+                   aria-label="Email"
+                   formControlName="mail"
+                   required="required"
+                   autocomplete="email"
+                   readonly="readonly"
+                   type="email"
+                   [class.invalid]="!parentForm.controls.mail.valid">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput
+                   placeholder="Votre Téléphone"
+                   aria-label="Téléphone"
+                   required="required"
+                   formControlName="phone"
+                   autocomplete="tel"
+                   type="tel"
+                   [class.invalid]="!parentForm.controls.phone.valid">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput
+                   placeholder="Vous avez besoin de"
+                   aria-label="Besoin"
+                   formControlName="needs">
+            </textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput
+                      placeholder="Vous pouvez proposer de"
+                      aria-label="Propositions"
+                      formControlName="capacities">
+            </textarea>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button (click)="cancel()">Fermer</button>
+    <button mat-raised-button type="submit" (click)="saveParent()" color="primary" [disabled]="!parentForm.valid">Enregistrer</button>
+</mat-dialog-actions>

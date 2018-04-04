@@ -15,6 +15,12 @@ console.log('`Detail` bundle loaded asynchronously');
      */
     DetailComponent,
   ],
+  exports: [
+      DetailComponent
+  ],
+  entryComponents: [
+      DetailComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

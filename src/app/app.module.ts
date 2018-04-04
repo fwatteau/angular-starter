@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -15,13 +15,35 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
-import { AboutComponent } from './about';
+import { ViewComponent } from './view';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 import { DevModuleModule } from './+dev-module';
+import { AlwaysAuthGuard } from '../guard/always-auth-guard';
+import { AuthProvider } from '../providers/auth/auth';
+import firebase from 'firebase';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
+import { OnlyLoggedInUsersGuard } from '../guard/only-logged-guard';
+import { LoginComponent } from './login';
+import {
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule
+} from '@angular/material';
+import { ParentProvider } from '../providers/parent/parent';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from 'angularfire2';
+import { YagaModule } from '@yaga/leaflet-ng2';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -35,6 +57,8 @@ interface StoreType {
   disposeOldHosts: () => void;
 }
 
+firebase.initializeApp(FIREBASE_CONFIG);
+
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
@@ -42,10 +66,14 @@ interface StoreType {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
+    ViewComponent,
     HomeComponent,
     NoContentComponent,
-    XLargeDirective
+    XLargeDirective,
+    LoginComponent,
+  ],
+  entryComponents: [
+      ViewComponent
   ],
   /**
    * Import Angular's modules.
@@ -53,13 +81,28 @@ interface StoreType {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatDialogModule,
+    MatIconModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    LeafletModule.forRoot(),
+    YagaModule,
     RouterModule.forRoot(ROUTES, {
       useHash: Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules
     }),
-
     /**
      * This section will import the `DevModuleModule` only in certain build types.
      * When the module is not imported it will get tree shaked.
@@ -72,7 +115,11 @@ interface StoreType {
    */
   providers: [
     environment.ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    AlwaysAuthGuard,
+    OnlyLoggedInUsersGuard,
+    AuthProvider,
+    ParentProvider
   ]
 })
 export class AppModule {}
