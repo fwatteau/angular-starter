@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Icon, LatLng } from 'leaflet';
+import * as firebase from 'firebase/app';
 
 export interface ParentMarker {
     parent: Parent;
