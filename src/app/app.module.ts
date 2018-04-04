@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -97,7 +96,6 @@ firebase.initializeApp(FIREBASE_CONFIG);
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    LeafletModule.forRoot(),
     YagaModule,
     RouterModule.forRoot(ROUTES, {
       useHash: Boolean(history.pushState) === false,
