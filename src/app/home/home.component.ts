@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { icon, Icon, latLng, LatLng } from 'leaflet';
 import { Title } from './title';
-import { Parent, ParentMarker, ParentProvider } from '../../providers/parent/parent';
+import { ParentProvider } from '../../providers/parent/parent';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ViewComponent } from '../view';
 import { OSM_TILE_LAYER_URL } from '@yaga/leaflet-ng2';
+import { AuthProvider, User } from '../../providers/auth/auth';
+import { ActivatedRoute } from '@angular/router';
+import { Parent, ParentMarker } from '../../model/parent';
 
 @Component({
   /**
@@ -33,39 +36,66 @@ import { OSM_TILE_LAYER_URL } from '@yaga/leaflet-ng2';
 export class HomeComponent implements OnInit {
   public tileLayerUrl: string = OSM_TILE_LAYER_URL;
   public center: LatLng = latLng(50.6570387, 3.135499);
+  public user: User;
+  public legends: Icon[] = [];
+  public newUser: string;
 
-  public layers: ParentMarker[] = [
-      // marker([ 50.6570387, 3.135499 ])
-  ];
+  public layers: ParentMarker[] = [];
   protected recentIcon: Icon = icon({
-    iconUrl: '../../assets/icon/marker-icon.png',
+    iconUrl: '../../assets/icon/marker-green-icon.png',
     iconSize: [25, 41],
     shadowUrl: '../../assets/icon/marker-shadow.png',
     shadowSize: [41, 41],
     iconAnchor: [12, 40],
     shadowAnchor: [12, 41],
+    attribution: 'Mis à jour récemment',
     popupAnchor: [0, -30]
   });
 
   protected oldIcon: Icon = icon({
+    iconUrl: '../../assets/icon/marker-red-icon.png',
+    iconSize: [25, 41],
+    shadowUrl: '../../assets/icon/marker-shadow.png',
+    shadowSize: [41, 41],
+    iconAnchor: [12, 40],
+    shadowAnchor: [12, 41],
+    attribution: 'Mis à jour l\'an dernier',
+    popupAnchor: [0, -30]
+  });
+
+  protected bugIcon: Icon = icon({
     iconUrl: '../../assets/icon/marker-icon-2x.png',
     iconSize: [50, 82],
     shadowUrl: '../../assets/icon/marker-shadow.png',
     shadowSize: [82, 82],
     iconAnchor: [25, 82],
     shadowAnchor: [25, 82],
+    attribution: 'Un bug',
     popupAnchor: [0, -55]
   });
 
   protected homeIcon: Icon = icon({
-      iconUrl: '../../assets/icon/maison-icon.png',
-      iconSize: [41, 41],
-      shadowUrl: '../../assets/icon/marker-shadow.png',
-      shadowSize: [41, 41],
-      iconAnchor: [20, 40],
-      shadowAnchor: [20, 41],
-      popupAnchor: [1, -30]
+    iconUrl: '../../assets/icon/maison-icon.png',
+    iconSize: [41, 41],
+    shadowUrl: '../../assets/icon/marker-shadow.png',
+    shadowSize: [41, 41],
+    iconAnchor: [20, 40],
+    shadowAnchor: [20, 41],
+    attribution: 'Votre maison',
+    popupAnchor: [1, -30]
   });
+
+  protected schoolIcon: Icon = icon({
+    iconUrl: '../../assets/icon/marker-school-icon.png',
+    iconSize: [42, 51],
+    shadowUrl: '../../assets/icon/marker-shadow.png',
+    shadowSize: [41, 41],
+    iconAnchor: [21, 50],
+    shadowAnchor: [10, 41],
+    attribution: 'Le Collège',
+    popupAnchor: [1, -30]
+  });
+
   protected parents: Observable<Parent[]>;
   protected dialogConfig: MatDialogConfig = new MatDialogConfig();
   /**
@@ -75,41 +105,88 @@ export class HomeComponent implements OnInit {
     public title: Title,
     public http: HttpClient,
     public dialog: MatDialog,
-    public parentProvider: ParentProvider) {
+    public parentProvider: ParentProvider,
+    public auth: AuthProvider,
+    private route: ActivatedRoute) {
     this.parents = parentProvider.parents;
   }
 
   public openDialog(parent: Parent) {
-    console.log(this.dialogConfig.data);
     this.dialogConfig.data = {parent};
     this.dialog.open(ViewComponent, this.dialogConfig);
   }
 
   public ngOnInit() {
+    this.route.queryParamMap
+      .subscribe((params) => {
+          this.newUser = params.get('newUser');
+      });
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
     this.dialogConfig.width = '80vw';
+    const ya6mois = new Date();
+    ya6mois.setMonth(ya6mois.getMonth() - 6);
 
-    this.parents.subscribe((parents) => {
-      parents.forEach((parent: Parent) => {
-          if (!parent.geom || !parent.geom.lat) {
-              this.http.get('https://api-adresse.data.gouv.fr/search/?q=' + parent.address)
-                  .subscribe( (res) => {
-                      if (!res ||
-                          !res['features'] ||
-                          !res['features'].length ) {
-                          return;
-                      }
+    this.legends = [this.recentIcon, this.oldIcon, this.schoolIcon, this.homeIcon];
 
-                      parent.geom = latLng((res as any).features[0].geometry.coordinates[1]
-                          , (res as any).features[0].geometry.coordinates[0]);
+    this.auth.user$.subscribe((user: User) => {
+        this.user = user;
+        this.parents.subscribe((parents) => {
+            parents.forEach((parent: Parent) => {
+                let parentIcon: Icon;
+                if (this.isCollege(parent)) {
+                    parentIcon = this.schoolIcon;
+                } else if (this.isMyHome(parent)) {
+                    parentIcon = this.homeIcon;
+                } else if (parent.updateAt > ya6mois) {
+                    parentIcon = this.recentIcon;
+                } else {
+                    parentIcon = this.oldIcon;
+                }
 
-                      this.layers.push({parent, icon: this.recentIcon});
-                  });
-          } else {
-              this.layers.push({parent, icon: this.homeIcon});
-          }
-      });
+                if (!parent.geom || !parent.geom.lat) {
+                    this.http.get('https://api-adresse.data.gouv.fr/search/?q=' + parent.address)
+                        .subscribe( (res) => {
+                            if (!res ||
+                                !res['features'] ||
+                                !res['features'].length ) {
+                                return;
+                            }
+
+                            parent.geom = latLng((res as any).features[0].geometry.coordinates[1]
+                                , (res as any).features[0].geometry.coordinates[0]);
+
+                            this.layers.push({parent, icon: this.bugIcon});
+                        });
+                } else {
+                    this.layers.push({parent, icon: parentIcon});
+                }
+
+                if (this.newUser && parent.mail.toUpperCase() === this.newUser.toUpperCase()) {
+                    this.newUser = '';
+                    this.openDialog(parent);
+                }
+            });
+            if (this.newUser) {
+                const parent = new Parent();
+                parent.mail = this.newUser;
+                this.newUser = '';
+                this.openDialog(parent);
+            }
+        });
     });
+  }
+
+  public isCollege(parent: Parent): boolean {
+    return parent.id === '0';
+  }
+
+  public isMyHome(parent: Parent): boolean {
+    return parent.mail.toUpperCase() === this.user.email.toUpperCase();
+  }
+
+  public canEdit(parent: Parent): boolean {
+      return this.auth.isAdmin(this.user)
+        || this.isMyHome(parent);
   }
 }

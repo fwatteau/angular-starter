@@ -36,7 +36,9 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule
 } from '@angular/material';
 import { ParentProvider } from '../providers/parent/parent';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -87,9 +89,11 @@ firebase.initializeApp(FIREBASE_CONFIG);
     MatDialogModule,
     MatIconModule,
     MatDividerModule,
+    MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatListModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

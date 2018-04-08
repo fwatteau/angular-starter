@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmailValidator } from '../../validator/email';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,7 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
 import { Subscription } from 'rxjs/Subscription';
+import { Parent } from '../../model/parent';
 
 @Component({
   selector: 'view',
@@ -48,6 +49,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       private fb: FormBuilder,
       public http: HttpClient,
       public parentProvider: ParentProvider,
+      public snackBar: MatSnackBar,
       @Inject(MAT_DIALOG_DATA) public data: any
   ) {
 
@@ -73,7 +75,8 @@ export class ViewComponent implements OnInit, OnDestroy {
               Validators.compose([Validators.required])],
           name: ['',
               Validators.compose([Validators.minLength(6), Validators.required])],
-          geom: ''
+          geom: '',
+          updateAt: ''
       }, {hideRequired: false});
 
       this.addressCtrl.setValue(this.data.parent.address);
@@ -81,14 +84,18 @@ export class ViewComponent implements OnInit, OnDestroy {
           .startWith(this.data.parent.address)
           .debounceTime(400)
           .do((address: string) => {
-              this.http.get('https://api-adresse.data.gouv.fr/search/?q=' + address)
-                  .subscribe((res: any) => {
-                      this.addresses = res.features;
-                  });
+              if (address) {
+                  this.http.get('https://api-adresse.data.gouv.fr/search/?q=' + address)
+                      .subscribe((res: any) => {
+                          this.addresses = res.features;
+                      });
+              }
           })
           .subscribe();
       this.parentForm.addControl('address', this.addressCtrl);
-      this.parentForm.setValue(this.data.parent);
+      const p = new Parent();
+      Object.assign(p, this.data.parent);
+      this.parentForm.setValue(p);
   }
 
   public ngOnDestroy(): void {
@@ -109,7 +116,14 @@ export class ViewComponent implements OnInit, OnDestroy {
               parent.geom = {lat: (res as any).features[0].geometry.coordinates[1]
                   , lng: (res as any).features[0].geometry.coordinates[0]};
 
-              this.parentProvider.saveParent(parent);
+              this.parentProvider.saveParent(parent)
+                  .then(() => {
+                      this.snackBar.open('Données enregistrées');
+                      this.cancel();
+                  })
+                  .catch((error) => {
+                      this.snackBar.open('Erreur ' + error);
+                  });
           });
   }
 }

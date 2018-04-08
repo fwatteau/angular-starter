@@ -1,14 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  inject,
-  async,
-  TestBed,
-  ComponentFixture,
-  getTestBed
-} from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { async, ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
 /**
  * Load the implementations that should be tested.
  */
@@ -54,10 +46,6 @@ describe(`Home`, () => {
      * Trigger initial data binding.
      */
     fixture.detectChanges();
-  });
-
-  it('should have default data', () => {
-    expect(comp.localState).toEqual({ value: '' });
   });
 
   it('should have a title', () => {

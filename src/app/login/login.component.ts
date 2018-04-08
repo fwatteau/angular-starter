@@ -31,26 +31,30 @@ export class LoginComponent implements OnInit {
   }
 
   public loginUser(): void {
-      if (!this.loginForm.valid) {
-          console.log(this.loginForm.value);
-      } else {
-          this.showSpinner = true;
-          this.authProvider.loginUser(this.loginForm.value.email,
-              this.loginForm.value.password)
-              .then( () => {
-                    this.route.navigateByUrl('/home');
-              }, (error) => {
-                  this.showSpinner = false;
-                  console.log(error);
-                  window.alert(error.message);
-              });
-      }
+    if (!this.loginForm.valid) {
+      console.log(this.loginForm.value);
+    } else {
+      this.showSpinner = true;
+      this.authProvider.loginUser(this.loginForm.value.email,
+        this.loginForm.value.password)
+        .then( () => {
+            this.route.navigate(['/home'], {queryParams: {newUser: this.loginForm.value.email}});
+        }, (error) => {
+          this.showSpinner = false;
+          console.log(error);
+          window.alert(error.message);
+        });
+    }
+  }
+
+  public signup(): void {
+    this.authProvider.signupUser(this.loginForm.value.email,
+          this.loginForm.value.password)
+        .then(() => {
+          this.route.navigate(['/home'], {queryParams: {newUser: this.loginForm.value.email}});
+        });
   }
 /*
-    goToSignup(): void {
-        this.navCtrl.push('signup');
-    }
-
     goToResetPassword(): void {
         this.navCtrl.push('reset-password');
     }*/

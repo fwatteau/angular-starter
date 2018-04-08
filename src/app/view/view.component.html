@@ -1,5 +1,5 @@
-<h2 mat-dialog-title>Edition de la fiche de {{data.parent.name}}</h2>
-
+<h2 mat-dialog-title *ngIf="data.parent.name">Edition de la fiche de {{data.parent.name}}</h2>
+<h2 mat-dialog-title *ngIf="!data.parent.name">Saisie de vos coordonnées</h2>
 <mat-dialog-content>
     <form [formGroup]="parentForm" novalidate="novalidate">
         <mat-form-field>

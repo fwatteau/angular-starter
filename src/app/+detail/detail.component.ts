@@ -1,5 +1,5 @@
 import { Component, OnInit, } from '@angular/core';
-import { Parent } from '../../providers/parent/parent';
+import { Parent } from '../../model/parent';
 
 /**
  * We're loading this component asynchronously
