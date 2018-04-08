@@ -1,6 +1,5 @@
 import { Icon, latLng, LatLng } from 'leaflet';
 import { Injectable } from '@angular/core';
-import FieldValue = firebase.firestore.FieldValue;
 
 export interface ParentMarker {
     parent: Parent;
@@ -19,5 +18,5 @@ export class Parent {
     public children: string = '';
     public classroom: string = '';
     public geom: LatLng = latLng([0, 0]);
-    public updateAt: FieldValue = FieldValue.serverTimestamp();
+    public updateAt: Date = new Date();
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Parent } from '../../model/parent';
-import FieldValue = firebase.firestore.FieldValue;
+// import FieldValue = firebase.firestore.FieldValue;
 
 /*
   Generated class for the ParentProvider provider.
@@ -24,7 +24,7 @@ export class ParentProvider {
   }
 
   public saveParent(parent: Parent): Promise<void> {
-      parent.updateAt = FieldValue.serverTimestamp();
+      parent.updateAt = new Date();
       // Persist a document id
       if (!parent.id) {
           parent.id = this.db.createId();
