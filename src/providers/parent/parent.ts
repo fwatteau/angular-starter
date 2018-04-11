@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Parent } from '../../model/parent';
+import * as firebase from 'firebase/app';
 import DocumentReference = firebase.firestore.DocumentReference;
 
 /*
