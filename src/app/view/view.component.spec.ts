@@ -3,7 +3,7 @@ import { inject, TestBed } from '@angular/core/testing';
 /**
  * Load the implementations that should be tested.
  */
-import { ViewComponent } from './about.component';
+import { ViewComponent } from './view.component';
 
 describe('About', () => {
   /**

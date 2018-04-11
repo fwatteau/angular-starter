@@ -1,7 +1,8 @@
 <yaga-map [zoom]="12" [lat]="center.lat" [lng]="center.lng">
     <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
     <yaga-feature-group *ngFor="let m of layers">
-        <yaga-marker [lat]="m.parent.geom.lat" [popupOpened]="false" [lng]="m.parent.geom.lng" [icon]="m.icon">
+        <yaga-marker [lat]="m.parent.geom.lat" [popupOpened]="isCollege(m.parent)"
+                     [lng]="m.parent.geom.lng" [icon]="m.icon" (click)="openMyHome(m.parent)">
             <yaga-tooltip *ngIf="isCollege(m.parent)">
                 <button mat-icon-button disabled aria-hidden="true">
                     <mat-icon>person</mat-icon>
@@ -18,12 +19,13 @@
                     </li>
                 </ul>
             </yaga-tooltip>
-            <yaga-popup [closeButton]="true" *ngIf="!isCollege(m.parent)">
+            <yaga-popup [closeButton]="true" *ngIf="!isCollege(m.parent) && !isMyHome(m.parent)">
                 <h5>
-                    <button mat-icon-button disabled aria-hidden="true" *ngIf="!canEdit(m.parent)">
-                        <mat-icon>person</mat-icon>
+                    <button mat-icon-button disabled aria-hidden="true" *ngIf="m.parent.places">
+                        {{m.parent.places}} x <mat-icon>person</mat-icon>
                     </button>
-                    <button mat-icon-button color="primary" (click)="openDialog(m.parent)" *ngIf="canEdit(m.parent)">
+                    <button mat-mini-fab color="primary" style="float:right;" (click)="openDialog(m.parent)"
+                            *ngIf="canEdit(m.parent)" title="Editer">
                         <mat-icon aria-label="Edit value">mode_edit</mat-icon>
                     </button>
 
@@ -49,8 +51,8 @@
     </yaga-feature-group>
 </yaga-map>
 <mat-list dense>
-    <mat-list-item *ngIf="newUser">
-        <h5>{{newUser}}</h5>
+    <mat-list-item>
+        <h5>Légende</h5>
     </mat-list-item>
     <mat-list-item *ngFor="let leg of legends">
         <img matListAvatar [src]="leg.options.iconUrl" [alt]="leg.options.attribution">

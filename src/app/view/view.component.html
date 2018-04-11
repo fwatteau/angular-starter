@@ -1,5 +1,10 @@
-<h2 mat-dialog-title *ngIf="data.parent.name">Edition de la fiche de {{data.parent.name}}</h2>
-<h2 mat-dialog-title *ngIf="!data.parent.name">Saisie de vos coordonnées</h2>
+<h2 mat-dialog-title *ngIf="data.parent.id">
+    Edition de la fiche de {{data.parent.name}}
+    <button mat-mini-fab color="warn" style="float:right;" (click)="deleteParent(data.parent)"
+            title="Supprimer">
+        <mat-icon aria-label="Delete value">delete</mat-icon>
+    </button></h2>
+<h2 mat-dialog-title *ngIf="!data.parent.id">Saisie de vos coordonnées</h2>
 <mat-dialog-content>
     <form [formGroup]="parentForm" novalidate="novalidate">
         <mat-form-field>
@@ -10,6 +15,15 @@
                    formControlName="name"
                    autocomplete="name"
                    [class.invalid]="!parentForm.controls.name.valid">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput
+                   placeholder="Nombre de place disponible"
+                   aria-label="Nombre de place"
+                   required="required"
+                   formControlName="places"
+                   type="number"
+                   [class.invalid]="!parentForm.controls.places.valid">
         </mat-form-field>
         <mat-form-field>
             <input matInput
@@ -31,6 +45,7 @@
                    placeholder="Votre Enfant"
                    aria-label="Prénom de l'enfant"
                    required="required"
+                   autocomplete='given-name'
                    formControlName="children"
                    [class.invalid]="!parentForm.controls.children.valid">
         </mat-form-field>
@@ -81,6 +96,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-raised-button (click)="cancel()">Fermer</button>
+    <button mat-raised-button (click)="cancel()" *ngIf="data.parent.id">Fermer</button>
     <button mat-raised-button type="submit" (click)="saveParent()" color="primary" [disabled]="!parentForm.valid">Enregistrer</button>
 </mat-dialog-actions>

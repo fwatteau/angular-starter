@@ -61,11 +61,12 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
       this.parentForm = this.fb.group({
-          id: ['',
-              Validators.compose([Validators.required])],
+          id: '',
           mail: ['',
               Validators.compose([Validators.required, EmailValidator.isValid])],
           phone: ['',
+              Validators.compose([Validators.required])],
+          places: ['',
               Validators.compose([Validators.required])],
           capacities: '',
           needs: '',
@@ -125,5 +126,18 @@ export class ViewComponent implements OnInit, OnDestroy {
                       this.snackBar.open('Erreur ' + error);
                   });
           });
+  }
+
+  public deleteParent(parent: Parent) {
+    if (confirm('Etes vous certain de vouloir vous désinscrire ?')) {
+        this.parentProvider.deleteParent(parent)
+            .then(() => {
+                this.snackBar.open('Informations supprimées');
+                this.cancel();
+            })
+            .catch((error) => {
+                this.snackBar.open('Erreur ' + error);
+            });
+    }
   }
 }

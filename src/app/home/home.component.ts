@@ -111,9 +111,18 @@ export class HomeComponent implements OnInit {
     this.parents = parentProvider.parents;
   }
 
+
+  public openMyHome(parent: Parent) {
+    if (this.isMyHome(parent)) {
+        this.openDialog(parent);
+    }
+  }
+
   public openDialog(parent: Parent) {
-    this.dialogConfig.data = {parent};
-    this.dialog.open(ViewComponent, this.dialogConfig);
+    if (this.canEdit(parent)) {
+      this.dialogConfig.data = {parent};
+      this.dialog.open(ViewComponent, this.dialogConfig);
+    }
   }
 
   public ngOnInit() {
@@ -145,6 +154,7 @@ export class HomeComponent implements OnInit {
                 }
 
                 if (!parent.geom || !parent.geom.lat) {
+                    // Ne doit jamais entrer dans cette zone ... normalement
                     this.http.get('https://api-adresse.data.gouv.fr/search/?q=' + parent.address)
                         .subscribe( (res) => {
                             if (!res ||
@@ -162,11 +172,14 @@ export class HomeComponent implements OnInit {
                     this.layers.push({parent, icon: parentIcon});
                 }
 
+                // First connexion
                 if (this.newUser && parent.mail.toUpperCase() === this.newUser.toUpperCase()) {
                     this.newUser = '';
                     this.openDialog(parent);
                 }
             });
+
+            // First connexion + New user
             if (this.newUser) {
                 const parent = new Parent();
                 parent.mail = this.newUser;

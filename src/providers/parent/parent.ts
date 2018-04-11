@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Parent } from '../../model/parent';
-// import FieldValue = firebase.firestore.FieldValue;
+import DocumentReference = firebase.firestore.DocumentReference;
 
 /*
   Generated class for the ParentProvider provider.
@@ -27,10 +27,14 @@ export class ParentProvider {
       parent.updateAt = new Date();
       // Persist a document id
       if (!parent.id) {
-          parent.id = this.db.createId();
+
           return this.db.collection<Parent>('parents')
               .add(parent)
-              .then(() => console.info(parent.name + ' added !'));
+              .then((documentReference: DocumentReference) => {
+                  parent.id = documentReference.id;
+                  documentReference.set(parent);
+                  console.info(parent.name + ' added !');
+              });
       } else {
           return this.db
               .doc('parents/' + parent.id)
@@ -39,4 +43,12 @@ export class ParentProvider {
       }
   }
 
+  public deleteParent(parent: Parent) {
+      return this.db
+          .doc('parents/' + parent.id)
+          .delete()
+          .then(() => {
+             console.info(parent.name + ' deleted !');
+          });
+  }
 }

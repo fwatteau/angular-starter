@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validator/email';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     public route: Router,
     public authProvider: AuthProvider,
     public formBuilder: FormBuilder,
+    public snackBar: MatSnackBar,
   ) {
   }
 
@@ -54,8 +56,17 @@ export class LoginComponent implements OnInit {
           this.route.navigate(['/home'], {queryParams: {newUser: this.loginForm.value.email}});
         });
   }
-/*
-    goToResetPassword(): void {
-        this.navCtrl.push('reset-password');
-    }*/
+
+  public resetPassword(): void {
+    if (this.loginForm.controls.email.valid) {
+      this.authProvider.resetPassword(this.loginForm.value.email)
+        .then(() => {
+           this.snackBar.open('Un messaqe permettant de réinitialisation votre mot de passe '
+               + 'a été envoyé à l\'adresse ' + this.loginForm.value.email);
+        });
+    } else {
+        this.snackBar.open('Pour réinitialiser votre mot de passe, merci de saisir votre '
+            + 'adresse email');
+    }
+  }
 }
