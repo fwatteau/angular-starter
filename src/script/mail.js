@@ -1,15 +1,15 @@
 
 // Generate test SMTP service account from ethereal.email
 exports.handler = function(event, context, callback) {
-    console.log('${process.env.MAIL_SMTP}', context);
+    console.log('${MAIL_SMTP}', context);
     const nodemailer = require('./node_modules/nodemailer');
     const transporter = nodemailer.createTransport({
-        host: '${process.env.MAIL_SMTP}',
+        host: '${MAIL_SMTP}',
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: '${process.env.MAIL_USER}', // generated ethereal user
-            pass: '${process.env.MAIL_PASS}' // generated ethereal password
+            user: '${MAIL_USER}', // generated ethereal user
+            pass: '${MAIL_PASS}' // generated ethereal password
         }
     });
 
