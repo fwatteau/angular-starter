@@ -19,7 +19,9 @@ data && Object.keys(data).forEach(key => {
                 nestedContent[docTitle].id = docTitle;
                 if (nestedContent[docTitle].classroom && nestedContent[docTitle].classroom.startsWith('3')) {
                     console.info('Eleve ' + nestedContent[docTitle].name + ' identifié en troisième (classe='
-                        + nestedContent[docTitle].classroom + ')')
+                        + nestedContent[docTitle].classroom + ')');
+                } if (docTitle == 20 || docTitle == 23) {
+                    console.info('Eleve ' + nestedContent[docTitle].name + ' parti');
                 } else {
                     console.info('Recherche ' + nestedContent[docTitle].address);
 
