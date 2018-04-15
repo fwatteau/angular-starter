@@ -2,7 +2,6 @@
 // Generate test SMTP service account from ethereal.email
 exports.handler = function(event, context, callback) {
     const nodemailer = require('./node_modules/nodemailer');
-
     console.log(nodemailer);
     const transporter = nodemailer.createTransport({
         host: process.env.MAIL_SMTP,
