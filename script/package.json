@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "netlify function example",
   "dependencies": {
+    "mail": "^0.2.3",
     "nodemailer": "^4.6.4"
   },
   "private": true
