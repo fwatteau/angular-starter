@@ -1,7 +1,15 @@
+const nodemailer = require('nodemailer');/*
+* Hi,
 
+I try to import a library from a script written in js :
+    const nodemailer = require('../node_modules/nodemailer');
+
+I try several path ('nodemailer', '../../nodemailer') but none was succedeed.
+
+It seems possible ? i see it in an example on yout guthub : https://github.com/netlify/code-examples/blob/master/function_examples/rest/func/text.js with
+* */
 // Generate test SMTP service account from ethereal.email
 exports.handler = function(event, context, callback) {
-    const nodemailer = require('nodemailer');
     console.log(nodemailer);
     const transporter = nodemailer.createTransport({
         host: process.env.MAIL_SMTP,

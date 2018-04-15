@@ -111,7 +111,6 @@ export class HomeComponent implements OnInit {
     this.parents = parentProvider.parents;
   }
 
-
   public openMyHome(parent: Parent) {
     if (this.isMyHome(parent)) {
         this.openDialog(parent);
@@ -147,6 +146,7 @@ export class HomeComponent implements OnInit {
                     parentIcon = this.schoolIcon;
                 } else if (this.isMyHome(parent)) {
                     parentIcon = this.homeIcon;
+                    this.center = parent.geom;
                 } else if (parent.updateAt > ya6mois) {
                     parentIcon = this.recentIcon;
                 } else {
