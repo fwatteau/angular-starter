@@ -1,4 +1,5 @@
-const nodemailer = require('nodemailer');/*
+// const nodemailer = require('nodemailer');
+/*
 * Hi,
 
 I try to import a library from a script written in js :
