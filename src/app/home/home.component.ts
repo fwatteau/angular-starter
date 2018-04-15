@@ -33,7 +33,7 @@ import { Parent, ParentMarker } from '../../model/parent';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  public tileLayerUrl: string = '//{s}.tile.osm.org/{z}/{x}/{y}.png';
+  public tileLayerUrl: string = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   public center: LatLng = latLng(50.6570387, 3.135499);
   public user: User;
   public legends: Icon[] = [];
