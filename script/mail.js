@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 // Generate test SMTP service account from ethereal.email
 exports.handler = function(event, context, callback) {
     // const nodemailer = require('nodemailer');
+    console.log(nodemailer);
     const transporter = nodemailer.createTransport({
         host: process.env.MAIL_SMTP,
         port: 587,
@@ -12,7 +13,7 @@ exports.handler = function(event, context, callback) {
             pass: process.env.MAIL_PASS // generated ethereal password
         }
     });
-
+    console.log(transporter);
     // setup email data with unicode symbols
     const mailOptions = {
         from: '"College Communautaire 🎓" <collegecommunautaire@nordnet.fr>', // sender address
@@ -21,7 +22,7 @@ exports.handler = function(event, context, callback) {
         text: 'Zen soyons zen ?', // plain text body
         html: '<b>Zen soyons zen?</b>' // html body
     };
-
+    console.log(mailOptions);
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
