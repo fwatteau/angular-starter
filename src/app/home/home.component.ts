@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ViewComponent } from '../view';
-import { OSM_TILE_LAYER_URL } from '@yaga/leaflet-ng2';
 import { AuthProvider, User } from '../../providers/auth/auth';
 import { ActivatedRoute } from '@angular/router';
 import { Parent, ParentMarker } from '../../model/parent';
@@ -34,7 +33,7 @@ import { Parent, ParentMarker } from '../../model/parent';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  public tileLayerUrl: string = OSM_TILE_LAYER_URL;
+  public tileLayerUrl: string = '//{s}.tile.osm.org/{z}/{x}/{y}.png';
   public center: LatLng = latLng(50.6570387, 3.135499);
   public user: User;
   public legends: Icon[] = [];
