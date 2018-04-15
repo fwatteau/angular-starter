@@ -1,0 +1,9 @@
+{
+  "name": "script",
+  "version": "0.0.1",
+  "description": "netlify function example",
+  "dependencies": {
+    "nodemailer": "^4.6.4",
+  },
+  "private": true
+}
