@@ -6,5 +6,6 @@
     "projectId": "covoiturage-app",
     "storageBucket": "covoiturage-app.appspot.com",
     "messagingSenderId": "655912646221"
-  }
+  },
+  "function_host": "//localhost:9000"
 }

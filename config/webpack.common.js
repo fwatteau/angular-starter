@@ -20,7 +20,6 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
 
 const buildUtils = require('./build-utils');
-
 /**
  * Webpack configuration
  *
@@ -104,7 +103,7 @@ module.exports = function (options) {
      */
     module: {
 
-      rules: [
+        rules: [
           ...ngcWebpackConfig.loaders,
 
         /**
@@ -160,7 +159,6 @@ module.exports = function (options) {
           test: /\.(eot|woff2?|svg|ttf)([\?]?.*)$/,
           use: 'file-loader'
         }
-
       ]
 
     },
@@ -185,6 +183,7 @@ module.exports = function (options) {
         'ENV': JSON.stringify(METADATA.ENV),
         'HMR': METADATA.HMR,
         'AOT': METADATA.AOT,
+        'functionHost': METADATA.functionHost,
         'process.env.ENV': JSON.stringify(METADATA.ENV),
         'process.env.NODE_ENV': JSON.stringify(METADATA.ENV),
         'process.env.HMR': METADATA.HMR,

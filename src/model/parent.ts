@@ -16,6 +16,7 @@ export class Parent {
     public mail: string = '';
     public phone: string = '';
     public children: string = '';
+    public notification: boolean = true;
     public places: number = 2;
     public classroom: string = '';
     public geom: LatLng = latLng([0, 0]);

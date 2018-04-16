@@ -16,6 +16,13 @@
                    autocomplete="name"
                    [class.invalid]="!parentForm.controls.name.valid">
         </mat-form-field>
+        <mat-slide-toggle
+                class="example-margin"
+                color="primary"
+                aria-label="Recevoir des notifications"
+                formControlName="notification">
+            Recevoir des notifications à chaque mise à jour
+        </mat-slide-toggle>
         <mat-form-field>
             <input matInput
                    placeholder="Nombre de place disponible"

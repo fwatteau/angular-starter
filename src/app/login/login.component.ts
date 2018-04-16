@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this.authProvider.loginUser(this.loginForm.value.email,
         this.loginForm.value.password)
         .then( () => {
-            this.route.navigate(['/home'], {queryParams: {newUser: this.loginForm.value.email}});
+            this.route.navigate(['/home']);
         }, (error) => {
           this.showSpinner = false;
           console.log(error);

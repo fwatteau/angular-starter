@@ -78,6 +78,7 @@ interface SystemJS {
 interface GlobalEnvironment {
   ENV: string;
   HMR: boolean;
+  functionHost: string;
   SystemJS: SystemJS;
   System: SystemJS;
   FIREBASE_CONFIG: FirebaseConfig;

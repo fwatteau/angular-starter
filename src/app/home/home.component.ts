@@ -75,11 +75,11 @@ export class HomeComponent implements OnInit {
 
   protected homeIcon: Icon = icon({
     iconUrl: '../../assets/icon/maison-icon.png',
-    iconSize: [41, 41],
+    iconSize: [51, 51],
     shadowUrl: '../../assets/icon/marker-shadow.png',
     shadowSize: [41, 41],
-    iconAnchor: [20, 40],
-    shadowAnchor: [20, 41],
+    iconAnchor: [25, 51],
+    shadowAnchor: [25, 51],
     attribution: 'Votre maison',
     popupAnchor: [1, -30]
   });
@@ -145,7 +145,6 @@ export class HomeComponent implements OnInit {
                     parentIcon = this.schoolIcon;
                 } else if (this.isMyHome(parent)) {
                     parentIcon = this.homeIcon;
-                    this.center = parent.geom;
                 } else if (parent.updateAt > ya6mois) {
                     parentIcon = this.recentIcon;
                 } else {

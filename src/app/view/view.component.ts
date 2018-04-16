@@ -70,6 +70,7 @@ export class ViewComponent implements OnInit, OnDestroy {
               Validators.compose([Validators.required])],
           capacities: '',
           needs: '',
+          notification: '',
           children: ['',
               Validators.compose([Validators.required])],
           classroom: ['',
@@ -121,6 +122,9 @@ export class ViewComponent implements OnInit, OnDestroy {
                   .then(() => {
                       this.snackBar.open('Données enregistrées');
                       this.cancel();
+                  })
+                  .then(() => {
+                      this.http.post('/.netlify/function//mail', parent);
                   })
                   .catch((error) => {
                       this.snackBar.open('Erreur ' + error);
