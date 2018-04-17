@@ -1,19 +1,10 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const underscore = require('underscore');
-const admin = require('firebase-admin');
 
 
 // Generate test SMTP service account from ethereal.email
 exports.handler = function(event, context, callback) {
-    const serviceAccount = require('../src/assets/service-key.json');
-
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
-    });
-
-    const db = admin.firestore();
-
     // Seules les requêtes POST génére un envoi de mail
     if (event.httpMethod === 'POST') {
 
@@ -43,12 +34,13 @@ exports.handler = function(event, context, callback) {
                 });
 
                 // setup email data with unicode symbols
+                const paramaters = JSON.parse(event.body);
                 const mailOptions = {
                     from: '"College Communautaire 🎓" <collegecommunautaire@nordnet.fr>', // sender address
-                    to: 'f.watteau@gmail.com', // list of receivers
+                    to: paramaters.emails, // list of receivers
                     subject: 'Ajout d\'informations ✔', // Subject line
                     text: 'Informations mises à jour', // plain text body
-                    html: compiled(JSON.parse(event.body)) // html body
+                    html: compiled(paramaters.parent) // html body
                 };
 
                 // send mail with defined transport object

@@ -43,8 +43,9 @@ export class ViewComponent implements OnInit, OnDestroy {
   public addresses: any[];
   public filteredAddresses: Subscription;
   public addressCtrl: FormControl = new FormControl();
+  private emails: string[];
 
-  constructor(
+    constructor(
       public dialogRef: MatDialogRef<ViewComponent>,
       private fb: FormBuilder,
       public http: HttpClient,
@@ -98,6 +99,14 @@ export class ViewComponent implements OnInit, OnDestroy {
       const p = new Parent();
       Object.assign(p, this.data.parent);
       this.parentForm.setValue(p);
+
+      // Get emails
+      this.parentProvider.parents.subscribe((parents: Parent[]) => {
+          const notif = parents.filter((p) => {
+              return p.notification === true;
+          });
+          this.emails = notif.map((m) => m.mail);
+      });
   }
 
   public ngOnDestroy(): void {
@@ -120,11 +129,9 @@ export class ViewComponent implements OnInit, OnDestroy {
 
               this.parentProvider.saveParent(parent)
                   .then(() => {
+                      this.http.post('.netlify/functions/mail', {parent, emails: this.emails});
                       this.snackBar.open('Données enregistrées');
                       this.cancel();
-                  })
-                  .then(() => {
-                      this.http.post('/.netlify/function//mail', parent);
                   })
                   .catch((error) => {
                       this.snackBar.open('Erreur ' + error);
@@ -134,14 +141,14 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   public deleteParent(parent: Parent) {
     if (confirm('Etes vous certain de vouloir vous désinscrire ?')) {
-        this.parentProvider.deleteParent(parent)
-            .then(() => {
-                this.snackBar.open('Informations supprimées');
-                this.cancel();
-            })
-            .catch((error) => {
-                this.snackBar.open('Erreur ' + error);
-            });
+      this.parentProvider.deleteParent(parent)
+        .then(() => {
+            this.snackBar.open('Informations supprimées');
+            this.cancel();
+        })
+        .catch((error) => {
+            this.snackBar.open('Erreur ' + error);
+        });
     }
   }
 }
