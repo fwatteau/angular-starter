@@ -129,7 +129,11 @@ export class ViewComponent implements OnInit, OnDestroy {
 
               this.parentProvider.saveParent(parent)
                   .then(() => {
-                      this.http.post('.netlify/functions/mail', {parent, emails: this.emails});
+                      if (this.emails.length) {
+                          this.http.post('.netlify/functions/mail', {parent, emails: this.emails})
+                          // this.http.post('//localhost:9000/mail', {parent, emails: this.emails})
+                              .subscribe(() => console.info('Notification envoyée'));
+                      }
                       this.snackBar.open('Données enregistrées');
                       this.cancel();
                   })
