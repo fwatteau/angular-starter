@@ -7251,7 +7251,7 @@ const underscore = __webpack_require__(51);
 exports.handler = function (event, context, callback) {
     // Seules les requêtes POST génére un envoi de mail
     if (event.httpMethod === 'POST') {
-        const template = fs.readFileSync('./src/assets/template.html', 'utf8');
+        const template = fs.readFileSync('./template.html', 'utf8');
         const compiled = underscore.template(template);
         const transporter = nodemailer.createTransport({
             host: process.env.MAIL_SMTP,
