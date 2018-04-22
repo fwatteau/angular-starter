@@ -2,11 +2,17 @@
   width:100%;
 }
 
-form {
-  width: 50%;
+mat-vertical-stepper {
   margin-top: 30vh;
   margin-left: auto;
   margin-right: auto;
+  width: 95vw;
+}
+
+@media screen and (min-width: 640px) {
+  mat-vertical-stepper {
+    width: 75vw;
+  }
 }
 
 mat-hint.activate {

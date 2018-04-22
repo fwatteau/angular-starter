@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthProvider {
     public user$: Observable<User>;
 
     constructor(private afAuth: AngularFireAuth,
-                private afs: AngularFirestore,
-                private router: Router) {
+                private afs: AngularFirestore) {
         //// Get auth data, then get firestore user document || null
         this.user$ = this.afAuth.authState
             .switchMap((user) => {
@@ -33,6 +31,14 @@ export class AuthProvider {
             .then( (newUser) => {
                 this.updateUserData(newUser);
             });
+    }
+
+    public getUsers(): Observable<User[]> {
+        const userRef = this.afs
+            .collection<User>('userProfile')
+            .valueChanges();
+
+        return userRef;
     }
 
     public resetPassword(email: string): Promise<void> {
