@@ -1,25 +1,9 @@
-<yaga-map [zoom]="12" [lat]="center.lat" [lng]="center.lng">
+<yaga-map zoom="12" [(lat)]="center.lat" [(lng)]="center.lng">
     <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
     <yaga-feature-group *ngFor="let m of layers">
-        <yaga-marker [lat]="m.parent.geom.lat" [popupOpened]="isCollege(m.parent)"
+        <yaga-marker [lat]="m.parent.geom.lat"
                      [lng]="m.parent.geom.lng" [icon]="m.icon" (click)="openMyHome(m.parent)">
-            <yaga-tooltip *ngIf="isCollege(m.parent)">
-                <button mat-icon-button disabled aria-hidden="true">
-                    <mat-icon>person</mat-icon>
-                </button>
-                {{m.parent.name}}
-                <ul class="flex-container">
-                    <li>
-                        <i class="material-icons" *ngIf="m.parent.phone">phone_android</i>
-                        <a [href]="'tel:' + m.parent.phone">{{m.parent.phone}}</a>
-                    </li>
-                    <li>
-                        <i class="material-icons" *ngIf="m.parent.mail">email</i>
-                        <a [href]="'mailto:' + m.parent.mail">{{m.parent.mail}}</a>
-                    </li>
-                </ul>
-            </yaga-tooltip>
-            <yaga-popup [closeButton]="true" *ngIf="!isCollege(m.parent) && !isMyHome(m.parent)">
+            <yaga-popup closeButton="true" *ngIf="!isCollege(m.parent) && !isMyHome(m.parent)" [opened]="true">
                 <h5>
                     <button mat-icon-button disabled aria-hidden="true" *ngIf="m.parent.places">
                         {{m.parent.places}} x <mat-icon>person</mat-icon>
@@ -47,6 +31,22 @@
                     <li *ngIf="m.parent.needs"><u>a besoin de</u> : {{m.parent.needs}}</li>
                 </ul>
             </yaga-popup>
+            <yaga-tooltip closeButton="true" *ngIf="isCollege(m.parent)" [opened]="true">
+                <button mat-icon-button disabled aria-hidden="true">
+                    <mat-icon>person</mat-icon>
+                </button>
+                {{m.parent.name}}
+                <ul class="flex-container">
+                    <li>
+                        <i class="material-icons" *ngIf="m.parent.phone">phone_android</i>
+                        <a [href]="'tel:' + m.parent.phone">{{m.parent.phone}}</a>
+                    </li>
+                    <li>
+                        <i class="material-icons" *ngIf="m.parent.mail">email</i>
+                        <a [href]="'mailto:' + m.parent.mail">{{m.parent.mail}}</a>
+                    </li>
+                </ul>
+            </yaga-tooltip>
         </yaga-marker>
     </yaga-feature-group>
 </yaga-map>

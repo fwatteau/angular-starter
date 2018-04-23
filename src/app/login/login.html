@@ -6,7 +6,7 @@
                 <input matInput placeholder="votrenom@xxx.zz" formControlName="email" required>
             </mat-form-field>
             <div>
-                <button mat-button matStepperNext>Suivant</button>
+                <button mat-raised-button matStepperNext color="warn">Suivant</button>
             </div>
         </form>
     </mat-step>
@@ -14,7 +14,7 @@
         <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Entrez votre mot de passe</ng-template>
             <mat-form-field class="full-width">
-                <input matInput formControlName="password" required>
+                <input matInput formControlName="password" type="password" required>
                 <mat-hint [ngClass]="{'activate': firstFormGroup.controls.email.valid}"
                           *ngIf="userExist()" (click)="resetPassword()" align="end">
                     J'ai oublié mon mot de passe
@@ -26,7 +26,7 @@
                         [disabled]="!secondFormGroup.valid">
                     Première connexion
                 </button>
-                <button mat-button (click)="loginUser()" *ngIf="userExist()">Connexion</button>
+                <button mat-raised-button type="button" color="primary" (click)="loginUser()" *ngIf="userExist()">Connexion</button>
             </div>
         </form>
     </mat-step>

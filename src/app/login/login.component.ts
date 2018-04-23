@@ -58,9 +58,12 @@ export class LoginComponent implements OnInit {
             this.route.navigate(['/home']);
         }, (error) => {
           this.showSpinner = false;
-          console.log(error);
-          window.alert(error.message);
-        });
+          this.snackBar.open(error.message);
+        })
+          .catch((error) => {
+              this.showSpinner = false;
+              this.snackBar.open(error.message);
+          });
     }
   }
 

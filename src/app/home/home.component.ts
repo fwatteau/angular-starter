@@ -92,7 +92,8 @@ export class HomeComponent implements OnInit {
     iconAnchor: [21, 50],
     shadowAnchor: [10, 41],
     attribution: 'Le Collège',
-    popupAnchor: [1, -30]
+    popupAnchor: [0, -20],
+    tooltipAnchor: [0, -20]
   });
 
   protected parents: Observable<Parent[]>;
@@ -108,19 +109,6 @@ export class HomeComponent implements OnInit {
     public auth: AuthProvider,
     private route: ActivatedRoute) {
     this.parents = parentProvider.parents;
-  }
-
-  public openMyHome(parent: Parent) {
-    if (this.isMyHome(parent)) {
-        this.openDialog(parent);
-    }
-  }
-
-  public openDialog(parent: Parent) {
-    if (this.canEdit(parent)) {
-      this.dialogConfig.data = {parent};
-      this.dialog.open(ViewComponent, this.dialogConfig);
-    }
   }
 
   public ngOnInit() {
@@ -186,6 +174,19 @@ export class HomeComponent implements OnInit {
             }
         });
     });
+  }
+
+  public openMyHome(parent: Parent) {
+    if (this.isMyHome(parent)) {
+        this.openDialog(parent);
+    }
+  }
+
+  public openDialog(parent: Parent) {
+    if (this.canEdit(parent)) {
+        this.dialogConfig.data = {parent};
+        this.dialog.open(ViewComponent, this.dialogConfig);
+    }
   }
 
   public isCollege(parent: Parent): boolean {
