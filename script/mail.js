@@ -149,7 +149,7 @@ exports.handler = function(event, context, callback) {
         const paramaters = JSON.parse(event.body);
         const mailOptions = {
             from: '"College Communautaire 🎓" <collegecommunautaire@nordnet.fr>', // sender address
-            to: paramaters.emails, // list of receivers
+            bcc: paramaters.emails, // list of receivers
             subject: 'Ajout d\'informations ✔', // Subject line
             text: 'Informations mises à jour', // plain text body
             html: compiled(paramaters.parent) // html body
