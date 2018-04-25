@@ -9,8 +9,8 @@ export class AuthProvider {
 
     constructor(private afAuth: AngularFireAuth,
                 private afs: AngularFirestore) {
-        // const settings = {timestampsInSnapshots: true};
-        // afs.app.firestore().settings(settings);
+        /* const settings = {timestampsInSnapshots: true};
+        afs.app.firestore().settings(settings);*/
         //// Get auth data, then get firestore user document || null
         this.user$ = this.afAuth.authState
             .switchMap((user) => {
