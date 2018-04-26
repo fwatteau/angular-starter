@@ -98,6 +98,7 @@
     "@types/geojson": "^7946.0.2",
     "@yaga/leaflet-ng2": "^1.0.0-rc10",
     "angularfire2": "5.0.0-rc.4",
+    "babel-loader": "^7.1.4",
     "core-js": "^2.5.5",
     "firebase": "4.8.0",
     "hammerjs": "^2.0.8",
