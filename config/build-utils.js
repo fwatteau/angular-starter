@@ -79,7 +79,7 @@ function ngcWebpackSetup(prod, metadata) {
     metadata = DEFAULT_METADATA;
   }
 
-  const buildOptimizer = false; // prod && metadata.AOT;
+  const buildOptimizer = prod && metadata.AOT;
   const sourceMap = true; // TODO: apply based on tsconfig value?
   const ngcWebpackPluginOptions = {
     skipCodeGeneration: !metadata.AOT,
