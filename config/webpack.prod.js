@@ -22,7 +22,7 @@ const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin')
 const PurifyPlugin = require('@angular-devkit/build-optimizer').PurifyPlugin;
 const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const CompressionPlugin = require('compression-webpack-plugin');
 
 
 function getUglifyOptions (supportES2015) {
@@ -98,13 +98,11 @@ module.exports = function (env) {
        * See: https://webpack.js.org/configuration/output/#output-chunkfilename
        */
       chunkFilename: '[name].[chunkhash].chunk.js'
-
     },
 
     module: {
 
       rules: [
-
         /**
          * Extract CSS files from .src/styles directory to external CSS file
          */
@@ -128,7 +126,13 @@ module.exports = function (env) {
           }),
           include: [helpers.root('src', 'styles')]
         },
-
+          {
+              test: /\.js$/,
+              loader: '@angular-devkit/build-optimizer/webpack-loader',
+              options: {
+                  sourceMap: false
+              }
+          },
       ]
 
     },
@@ -139,14 +143,12 @@ module.exports = function (env) {
      * See: https://webpack.js.org/configuration/plugins/
      */
     plugins: [
-
       new SourceMapDevToolPlugin({
         filename: '[file].map[query]',
         moduleFilenameTemplate: '[resource-path]',
         fallbackModuleFilenameTemplate: '[resource-path]?[hash]',
         sourceRoot: 'webpack:///'
       }),
-
 
       /**
        * Plugin: ExtractTextPlugin
@@ -184,10 +186,10 @@ module.exports = function (env) {
        * See: https://github.com/webpack/compression-webpack-plugin
        */
       //  install compression-webpack-plugin
-/*      new CompressionPlugin({
+      new CompressionPlugin({
         regExp: /\.css$|\.html$|\.js$|\.map$/,
         threshold: 2 * 1024
-      })*/
+      })
 
     ],
 

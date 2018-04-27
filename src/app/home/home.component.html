@@ -1,7 +1,7 @@
 <yaga-map zoom="12" [(lat)]="center.lat" [(lng)]="center.lng">
     <yaga-tile-layer [(url)]="tileLayerUrl"></yaga-tile-layer>
-    <yaga-feature-group *ngFor="let m of layers">
-        <yaga-marker [lat]="m.parent.geom.lat"
+    <yaga-feature-group>
+        <yaga-marker *ngFor="let m of layers" [lat]="m.parent.geom.lat"
                      [lng]="m.parent.geom.lng" [icon]="m.icon" (click)="openMyHome(m.parent)">
             <yaga-popup closeButton="true" *ngIf="!isCollege(m.parent) && !isMyHome(m.parent)" [opened]="true">
                 <h5>
