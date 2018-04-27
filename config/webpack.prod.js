@@ -126,13 +126,13 @@ module.exports = function (env) {
           }),
           include: [helpers.root('src', 'styles')]
         },
-          {
+      /*    {
               test: /\.js$/,
               loader: '@angular-devkit/build-optimizer/webpack-loader',
               options: {
                   sourceMap: false
               }
-          },
+          },*/
       ]
 
     },
