@@ -7,7 +7,14 @@
 <h2 mat-dialog-title *ngIf="!data.parent.id">Saisie de vos coordonnées</h2>
 <mat-dialog-content>
     <form [formGroup]="parentForm" novalidate="novalidate">
-        <mat-form-field>
+        <mat-slide-toggle
+                class="example-margin"
+                color="primary"
+                aria-label="Recevoir des notifications"
+                formControlName="notification">
+            Recevoir des notifications à chaque mise à jour
+        </mat-slide-toggle>
+        <mat-form-field fxFlex.gt-sm="49.5%">
             <input matInput
                    placeholder="Votre Nom"
                    aria-label="Nom"
@@ -16,14 +23,7 @@
                    autocomplete="name"
                    [class.invalid]="!parentForm.controls.name.valid">
         </mat-form-field>
-        <mat-slide-toggle
-                class="example-margin"
-                color="primary"
-                aria-label="Recevoir des notifications"
-                formControlName="notification">
-            Recevoir des notifications à chaque mise à jour
-        </mat-slide-toggle>
-        <mat-form-field>
+        <mat-form-field fxFlex.gt-sm="49.5%">
             <input matInput
                    placeholder="Nombre de place disponible"
                    aria-label="Nombre de place"
@@ -47,7 +47,7 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field fxFlex.gt-sm="49.5%">
             <input matInput
                    placeholder="Votre Enfant"
                    aria-label="Prénom de l'enfant"
@@ -56,7 +56,7 @@
                    formControlName="children"
                    [class.invalid]="!parentForm.controls.children.valid">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field fxFlex.gt-sm="49.5%">
             <input matInput
                    placeholder="Sa classe"
                    aria-label="Classe"
@@ -64,7 +64,8 @@
                    formControlName="classroom"
                    [class.invalid]="!parentForm.controls.classroom.valid">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field fxFlex.gt-sm="49.5%">
+            <mat-icon matSuffix>email</mat-icon>
             <input matInput
                    placeholder="Votre adresse email"
                    aria-label="Email"
@@ -75,7 +76,8 @@
                    type="email"
                    [class.invalid]="!parentForm.controls.mail.valid">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field fxFlex.gt-sm="49.5%">
+            <mat-icon matSuffix>phone</mat-icon>
             <input matInput
                    placeholder="Votre Téléphone"
                    aria-label="Téléphone"

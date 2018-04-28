@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
   public user: User;
   public legends: Icon[] = [];
   public newUser: string;
+  public hideLegend: boolean = true;
 
   public layers: ParentMarker[] = [];
   protected recentIcon: Icon = icon({

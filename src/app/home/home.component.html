@@ -50,12 +50,17 @@
         </yaga-marker>
     </yaga-feature-group>
 </yaga-map>
-<mat-list dense>
-    <mat-list-item>
-        <h5>Légende</h5>
-    </mat-list-item>
-    <mat-list-item *ngFor="let leg of legends">
-        <img matListAvatar [src]="leg.options.iconUrl" [alt]="leg.options.attribution">
-        <h6 matLine> {{leg.options.attribution}} </h6>
-    </mat-list-item>
-</mat-list>
+<div class="legende">
+    <button mat-mini-fab fxHide.gt-xs="true" mat-raised-button color="accent" (click)="hideLegend = !hideLegend">
+        <mat-icon aria-label="Légende">{{hideLegend ? "subject" : "close"}}</mat-icon>
+    </button>
+    <mat-list dense [fxHide.xs]="hideLegend">
+        <mat-list-item [fxHide.xs]="true">
+            <h5>Légende</h5>
+        </mat-list-item>
+        <mat-list-item *ngFor="let leg of legends">
+            <img matListAvatar [src]="leg.options.iconUrl" [alt]="leg.options.attribution">
+            <h6 matLine> {{leg.options.attribution}} </h6>
+        </mat-list-item>
+    </mat-list>
+</div>

@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -17,7 +19,6 @@ import { HomeComponent } from './home';
 import { ViewComponent } from './view';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
-import { DevModuleModule } from './+dev-module';
 import { AlwaysAuthGuard } from '../guard/always-auth-guard';
 import { AuthProvider } from '../providers/auth/auth';
 import firebase from 'firebase';
@@ -96,6 +97,7 @@ firebase.initializeApp(FIREBASE_CONFIG);
     MatInputModule,
     MatProgressSpinnerModule,
     MatListModule,
+    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -112,7 +114,7 @@ firebase.initializeApp(FIREBASE_CONFIG);
      * When the module is not imported it will get tree shaked.
      * This is a simple example, a big app should probably implement some logic
      */
-    ...environment.showDevModule ? [ DevModuleModule ] : [],
+    ...environment.showDevModule ? [ ] : [],
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
