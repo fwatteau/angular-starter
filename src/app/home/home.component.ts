@@ -127,12 +127,14 @@ export class HomeComponent implements OnInit {
 
     this.auth.user$.subscribe((user: User) => {
         this.user = user;
+        let haveHome = false;
         this.parents.subscribe((parents) => {
             parents.forEach((parent: Parent) => {
                 let parentIcon: Icon;
                 if (this.isCollege(parent)) {
                     parentIcon = this.schoolIcon;
                 } else if (this.isMyHome(parent)) {
+                    haveHome = true;
                     parentIcon = this.homeIcon;
                 } else if (parent.updateAt > ya6mois) {
                     parentIcon = this.recentIcon;
@@ -171,6 +173,11 @@ export class HomeComponent implements OnInit {
                 const parent = new Parent();
                 parent.mail = this.newUser;
                 this.newUser = '';
+                this.openDialog(parent);
+            } else if (!haveHome) {
+                // Not first connexion but no home
+                const parent = new Parent();
+                parent.mail = user.email;
                 this.openDialog(parent);
             }
         });

@@ -78,3 +78,5 @@ dll/
 *.ngsummary.json
 *.shim.ngstyle.ts
 /src/assets/service-key.json
+/src/assets/data.json
+src/college.xls
