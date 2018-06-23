@@ -7256,8 +7256,7 @@ exports.handler = function (event, context, callback) {
         const compiled = underscore.template(template);
         const transporter = nodemailer.createTransport({
             host: process.env.MAIL_SMTP,
-            port: 587,
-            secure: false, // true for 465, false for other ports
+            secure: true, // true for 465, false for other ports
             auth: {
                 user: process.env.MAIL_USER, // generated ethereal user
                 pass: process.env.MAIL_PASS // generated ethereal password
