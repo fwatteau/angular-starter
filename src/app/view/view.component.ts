@@ -102,8 +102,8 @@ export class ViewComponent implements OnInit, OnDestroy {
 
       // Get emails
       this.parentProvider.parents.subscribe((parents: Parent[]) => {
-          const notif = parents.filter((p) => {
-              return p.notification === true;
+          const notif = parents.filter((d) => {
+              return d.notification === true;
           });
           this.emails = notif.map((m) => m.mail);
       });
