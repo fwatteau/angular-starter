@@ -7250,6 +7250,9 @@ const template = '<html>\n' + '<head>\n' + '    <meta http-equiv="Content-Type" 
 
 // Generate test SMTP service account from ethereal.email
 exports.handler = function (event, context, callback) {
+    // allows for using callbacks as finish/error-handlers
+    context.callbackWaitsForEmptyEventLoop = false;
+  
     // Seules les requêtes POST génére un envoi de mail
     if (event.httpMethod === 'POST') {
         // const template = fs.readFileSync('./template.html', 'utf8');
