@@ -136,8 +136,8 @@ exports.handler = function(event, context, callback) {
         const compiled = underscore.template(template);
         const transporter = nodemailer.createTransport({
             host: process.env.MAIL_SMTP,
-            port: 465,
-            secure: true, // true for 465, false for other ports
+            secure: process.env.MAIL_SECURE, // true for 465, false for other ports
+            port: process.env.MAIL_PORT, // true for 465, false for other ports
             auth: {
                 user: process.env.MAIL_USER, // generated ethereal user
                 pass: process.env.MAIL_PASS// generated ethereal password
@@ -157,11 +157,12 @@ exports.handler = function(event, context, callback) {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                return console.log(error);
+                console.error(error);
+            } else {
+                console.log('Message sent: %s by %s', info.messageId, '${process.env.MAIL_USER}');
+                // Preview only available when sending through an Ethereal account
+                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
             }
-            console.log('Message sent: %s by %s', info.messageId, '${process.env.MAIL_USER}');
-            // Preview only available when sending through an Ethereal account
-            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
             // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
             // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...

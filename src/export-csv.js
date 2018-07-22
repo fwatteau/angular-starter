@@ -11,12 +11,20 @@ admin.firestore()
     .collection("parents")
     .get()
     .then((querySnapshot) => {
-        const fields = ['id', 'mail', 'name', 'children'];
+        const fields = ['id', 'mail', 'phone', 'name', 'children', 'updateAt', 'diff'];
         const opts = { fields };
         const data = [];
+        const now = new Date();
 
         querySnapshot.forEach(documentSnapshot => {
-            data.push(documentSnapshot.data());
+            let value = documentSnapshot.data();
+            if (value.updateAt) {
+                const updateAt = new Date(value.updateAt);
+                value.diff = (now - updateAt)/1000/3600/24;
+            } else {
+                value.diff = -1;
+            }
+            data.push(value);
         });
         try {
             const csv = json2csv(data, opts);
